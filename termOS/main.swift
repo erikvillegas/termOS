@@ -34,6 +34,8 @@ func findFirstResponder(view: View) -> TextField? {
 
 func start() {
     
+    log("started!!!")
+    
     let termbox = Termbox.sharedInstance
     
     termbox.start()
