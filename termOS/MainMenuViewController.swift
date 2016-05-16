@@ -14,7 +14,7 @@ class MainMenuViewController : MenuViewController {
     var textFields = [TextField]()
     
     func updateHeaderLabelWithFirstName(firstName: String?, lastName: String?) {
-        var string = ""
+        var string = "Hello"
         
         if let firstName = firstName where firstName.characters.count > 0 {
             string += " "
@@ -27,7 +27,7 @@ class MainMenuViewController : MenuViewController {
         }
         
         if string.characters.count > 0 {
-            string += " is awesome!"
+            string += "!"
         }
         headerLabel.text = string
     }
