@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		15681F211CEA15B800CF79F4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F201CEA15B800CF79F4 /* main.swift */; };
+		15681F2E1CEA15EB00CF79F4 /* termbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 15681F2B1CEA15EB00CF79F4 /* termbox.c */; };
+		15681F2F1CEA15EB00CF79F4 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 15681F2D1CEA15EB00CF79F4 /* utf8.c */; };
+		15681F3B1CEA15F500CF79F4 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F321CEA15F500CF79F4 /* BaseViewController.swift */; };
+		15681F3C1CEA15F500CF79F4 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F331CEA15F500CF79F4 /* NavigationController.swift */; };
+		15681F3D1CEA15F500CF79F4 /* Termbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F351CEA15F500CF79F4 /* Termbox.swift */; };
+		15681F3E1CEA15F500CF79F4 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F371CEA15F500CF79F4 /* Frame.swift */; };
+		15681F3F1CEA15F500CF79F4 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F381CEA15F500CF79F4 /* Label.swift */; };
+		15681F401CEA15F500CF79F4 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F391CEA15F500CF79F4 /* TextField.swift */; };
+		15681F411CEA15F500CF79F4 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F3A1CEA15F500CF79F4 /* View.swift */; };
+		15681F451CEA15FD00CF79F4 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F421CEA15FD00CF79F4 /* Logger.swift */; };
+		15681F461CEA15FD00CF79F4 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F431CEA15FD00CF79F4 /* MainMenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +36,22 @@
 /* Begin PBXFileReference section */
 		15681F1D1CEA15B800CF79F4 /* termOS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = termOS; sourceTree = BUILT_PRODUCTS_DIR; };
 		15681F201CEA15B800CF79F4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		15681F281CEA15EB00CF79F4 /* bytebuffer.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bytebuffer.inl; sourceTree = "<group>"; };
+		15681F291CEA15EB00CF79F4 /* input.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input.inl; sourceTree = "<group>"; };
+		15681F2A1CEA15EB00CF79F4 /* term.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = term.inl; sourceTree = "<group>"; };
+		15681F2B1CEA15EB00CF79F4 /* termbox.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = termbox.c; sourceTree = "<group>"; };
+		15681F2C1CEA15EB00CF79F4 /* termbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = termbox.h; sourceTree = "<group>"; };
+		15681F2D1CEA15EB00CF79F4 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utf8.c; sourceTree = "<group>"; };
+		15681F321CEA15F500CF79F4 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		15681F331CEA15F500CF79F4 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		15681F351CEA15F500CF79F4 /* Termbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Termbox.swift; sourceTree = "<group>"; };
+		15681F371CEA15F500CF79F4 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		15681F381CEA15F500CF79F4 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		15681F391CEA15F500CF79F4 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		15681F3A1CEA15F500CF79F4 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		15681F421CEA15FD00CF79F4 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		15681F431CEA15FD00CF79F4 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		15681F441CEA15FD00CF79F4 /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +84,73 @@
 		15681F1F1CEA15B800CF79F4 /* termOS */ = {
 			isa = PBXGroup;
 			children = (
+				15681F301CEA15F500CF79F4 /* termOS */,
 				15681F201CEA15B800CF79F4 /* main.swift */,
+				15681F431CEA15FD00CF79F4 /* MainMenuViewController.swift */,
+				15681F441CEA15FD00CF79F4 /* BridgingHeader.h */,
+				15E01A141CEA1C23008C7037 /* External */,
 			);
 			path = termOS;
+			sourceTree = "<group>";
+		};
+		15681F271CEA15EB00CF79F4 /* termbox-lib */ = {
+			isa = PBXGroup;
+			children = (
+				15681F281CEA15EB00CF79F4 /* bytebuffer.inl */,
+				15681F291CEA15EB00CF79F4 /* input.inl */,
+				15681F2A1CEA15EB00CF79F4 /* term.inl */,
+				15681F2B1CEA15EB00CF79F4 /* termbox.c */,
+				15681F2C1CEA15EB00CF79F4 /* termbox.h */,
+				15681F2D1CEA15EB00CF79F4 /* utf8.c */,
+			);
+			path = "termbox-lib";
+			sourceTree = "<group>";
+		};
+		15681F301CEA15F500CF79F4 /* termOS */ = {
+			isa = PBXGroup;
+			children = (
+				15681F421CEA15FD00CF79F4 /* Logger.swift */,
+				15681F311CEA15F500CF79F4 /* Controllers */,
+				15681F341CEA15F500CF79F4 /* Termbox */,
+				15681F361CEA15F500CF79F4 /* Views */,
+			);
+			path = termOS;
+			sourceTree = "<group>";
+		};
+		15681F311CEA15F500CF79F4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				15681F321CEA15F500CF79F4 /* BaseViewController.swift */,
+				15681F331CEA15F500CF79F4 /* NavigationController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		15681F341CEA15F500CF79F4 /* Termbox */ = {
+			isa = PBXGroup;
+			children = (
+				15681F351CEA15F500CF79F4 /* Termbox.swift */,
+			);
+			path = Termbox;
+			sourceTree = "<group>";
+		};
+		15681F361CEA15F500CF79F4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				15681F371CEA15F500CF79F4 /* Frame.swift */,
+				15681F381CEA15F500CF79F4 /* Label.swift */,
+				15681F391CEA15F500CF79F4 /* TextField.swift */,
+				15681F3A1CEA15F500CF79F4 /* View.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		15E01A141CEA1C23008C7037 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				15681F271CEA15EB00CF79F4 /* termbox-lib */,
+			);
+			name = External;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +210,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15681F461CEA15FD00CF79F4 /* MainMenuViewController.swift in Sources */,
+				15681F2F1CEA15EB00CF79F4 /* utf8.c in Sources */,
+				15681F451CEA15FD00CF79F4 /* Logger.swift in Sources */,
+				15681F3B1CEA15F500CF79F4 /* BaseViewController.swift in Sources */,
+				15681F411CEA15F500CF79F4 /* View.swift in Sources */,
+				15681F3C1CEA15F500CF79F4 /* NavigationController.swift in Sources */,
 				15681F211CEA15B800CF79F4 /* main.swift in Sources */,
+				15681F3E1CEA15F500CF79F4 /* Frame.swift in Sources */,
+				15681F2E1CEA15EB00CF79F4 /* termbox.c in Sources */,
+				15681F401CEA15F500CF79F4 /* TextField.swift in Sources */,
+				15681F3F1CEA15F500CF79F4 /* Label.swift in Sources */,
+				15681F3D1CEA15F500CF79F4 /* Termbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = termOS/BridgingHeader.h;
 			};
 			name = Debug;
 		};
@@ -219,6 +322,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = termOS/BridgingHeader.h;
 			};
 			name = Release;
 		};
@@ -241,6 +345,7 @@
 				15681F261CEA15B800CF79F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
