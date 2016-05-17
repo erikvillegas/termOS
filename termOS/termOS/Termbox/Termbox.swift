@@ -113,6 +113,7 @@ class Termbox {
         tb_poll_event(&event)
         
         if Int32(event.type) == TB_EVENT_KEY {
+            log("key event: " + String(event.key))
             if event.ch != 0 {
                 return .CharacterPressed(character: String(UnicodeScalar(event.ch)))
             }
@@ -127,6 +128,7 @@ class Termbox {
             }
         }
         else if Int32(event.type) == TB_EVENT_MOUSE {
+            log("mouse event!")
             return .MouseClick(x: Int(event.x), y: Int(event.y))
         }
         else if Int32(event.type) == TB_EVENT_RESIZE {
