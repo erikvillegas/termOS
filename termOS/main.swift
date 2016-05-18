@@ -31,10 +31,24 @@ func findFirstResponder(view: View) -> TextField? {
     return nil
 }
 
+func renderView(view:View, termbox:Termbox) {
+    let cells = view.draw()
+    
+    for (row, rowCells) in cells.enumerate() {
+        for (column, cell) in rowCells.enumerate() {
+            log("(3) adding at (\(column), \(row))")
+            termbox.addCell(cell, at: Point(x: row, y: column))
+        }
+    }
+}
 
 func start() {
-    
-    log("started!!!")
+
+    #if DEBUG
+    print("started in debug")
+    #else
+    print("started in release")
+    #endif
     
     let termbox = Termbox.sharedInstance
     
@@ -52,7 +66,7 @@ func start() {
     let mainMenuViewController = MainMenuViewController()
     navigationController.pushViewController(mainMenuViewController)
     
-    window.draw()
+    renderView(window, termbox: termbox)
     termbox.displayCells()
     
     var looping = true
@@ -76,7 +90,7 @@ func start() {
         
         navigationController.handleEvent(event)
         
-        window.draw()
+        renderView(window, termbox: termbox)
         termbox.displayCells()
     }
     
@@ -84,3 +98,4 @@ func start() {
 }
 
 start()
+

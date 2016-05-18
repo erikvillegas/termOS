@@ -321,6 +321,8 @@
 		15681F251CEA15B800CF79F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = termOS/BridgingHeader.h;
 			};

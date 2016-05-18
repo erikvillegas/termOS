@@ -59,10 +59,14 @@ struct Point : CustomStringConvertible {
 }
 
 struct Cell {
-    let character: String
-    let textColor: Color
-    let backgroundColor: Color
-    let textAttribute: TextAttribute
+    var character: String
+    var textColor: Color
+    var backgroundColor: Color
+    var textAttribute: TextAttribute
+    
+    static func emptyCell() -> Cell {
+        return Cell(character: " ", textColor: .Black, backgroundColor: .Black, textAttribute: .Bold)
+    }
 }
 
 class Termbox {
@@ -91,11 +95,19 @@ class Termbox {
     let cursor = Cursor()
     
     var width: Int {
+        #if DEBUG
+        return 80
+        #else
         return Int(tb_width())
+        #endif
     }
     
     var height: Int {
-        return Int(tb_height())
+        #if DEBUG
+            return 30
+        #else
+            return Int(tb_height())
+        #endif
     }
     
     func start(inputMode:InputMode = .Keyboard, _ outputMode:OutputMode = .Colors256) {
@@ -113,7 +125,6 @@ class Termbox {
         tb_poll_event(&event)
         
         if Int32(event.type) == TB_EVENT_KEY {
-            log("key event: " + String(event.key))
             if event.ch != 0 {
                 return .CharacterPressed(character: String(UnicodeScalar(event.ch)))
             }

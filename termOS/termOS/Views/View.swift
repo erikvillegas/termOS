@@ -10,31 +10,61 @@ import Foundation
 
 class View {
     var frame = Frame(x: 0, y: 0, width: 0, height: 0)
+    var bounds = Frame(x: 0, y: 0, width: 0, height: 0)
     var backgroundColor = Color.Clear
     var subviews = [View]()
     var superview: View?
     
-    func draw() {
+    func draw() -> [[Cell]] {
         
-        var startX = frame.x
-        var startY = frame.y
+
         
-        // frames are relative, so add the origin of the superview
-        if let superview = superview {
-            startX = superview.frame.x + frame.x
-            startY = superview.frame.y + frame.y
-        }
+//        for subview in subviews {
+//            subview.draw()
+//        }
         
-        for y in startY..<(startY + frame.height) {
-            for x in startX..<(startX + frame.width) {
-                let cell = Cell(character: " ", textColor: .Black, backgroundColor: backgroundColor, textAttribute: .None)
-                Termbox.sharedInstance.addCell(cell, at: Point(x: x, y: y))
+
+        return self.rasterize()
+    }
+    
+    func rasterize() -> [[Cell]] {
+        
+        // 1. rasterize myself
+        var cells = Array(count: frame.width, repeatedValue: Array(count: frame.height, repeatedValue: Cell.emptyCell()))
+        
+        for y in 0..<frame.height {
+            for x in 0..<frame.width {
+                log("adding at (\(x), \(y))")
+                
+                cells[x][y].character = " "
+                cells[x][y].backgroundColor = backgroundColor
             }
         }
         
-        for subview in subviews {
-            subview.draw()
+        // 2. composite my rasterized subviews on top of me
+        if let firstSubview = subviews.first {
+            
+            let subviewCells = firstSubview.rasterize()
+            
+            // composite the cells on top of mine given the frame.
+            
+            for y in 0..<firstSubview.frame.height {
+                for x in 0..<firstSubview.frame.width {
+                    
+                    let positionX = x + firstSubview.frame.x
+                    let positionY = y + firstSubview.frame.y
+                    
+                    log("(2) adding at (\(positionX), \(positionY))")
+                    
+                    cells[positionX][positionY] = subviewCells[x][y]
+                }
+            }
+            
+            
         }
+        
+        // 3. return my rasterized/composited cells
+        return cells
     }
     
     func addSubview(view: View) {

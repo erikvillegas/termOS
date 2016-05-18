@@ -24,7 +24,7 @@ class Label : View {
         self.text = text
     }
     
-    override func draw() {
+    override func draw() -> [[Cell]] {
         var startX = frame.x
         var startY = frame.y
         
@@ -70,5 +70,7 @@ class Label : View {
         for subview in subviews {
             subview.draw()
         }
+        
+        return [[Cell]]()
     }
 }

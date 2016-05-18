@@ -30,7 +30,7 @@ class TextField : View {
         self.text = text
     }
     
-    override func draw() {
+    override func draw() -> [[Cell]] {
         var startX = frame.x
         var startY = frame.y
         
@@ -82,6 +82,8 @@ class TextField : View {
         for subview in subviews {
             subview.draw()
         }
+        
+        return [[Cell]]()
     }
 }
 

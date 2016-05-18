@@ -38,5 +38,9 @@ extension NSData {
 }
 
 func log(text:String) {
+    #if DEBUG
+    print(text)
+    #else
     try! text.appendLineToURL(fileURL)
+    #endif
 }
