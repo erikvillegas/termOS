@@ -123,17 +123,33 @@ class MainMenuViewController : MenuViewController {
 //        view1.addSubview(view2)
 //        view.addSubview(view1)
         
-        var currentView = view
-        
-        for i in 0..<Int(view.frame.height/4) {
-            let view = View()
-            view.frame = Frame(x: 1, y: 1, width: currentView.frame.width - 2, height: currentView.frame.height - 2)
-            view.backgroundColor = Color(rawValue: 8 + (i % 8))!
-            
-            currentView.addSubview(view)
-            currentView = view
-        }
+//        var currentView = view
+//        
+//        for i in 0..<Int(view.frame.height/2) {
+//            let view = View()
+//            view.frame = Frame(x: 1, y: 1, width: currentView.frame.width - 2, height: currentView.frame.height - 2)
+//            view.backgroundColor = Color(rawValue: 8 + (i % 8))!
+//            
+//            currentView.addSubview(view)
+//            currentView = view
+//        }
 
+
+        let scrollView = ScrollView()
+        scrollView.frame = Frame(x: 1, y: 1, width: view.frame.width - 2, height: view.frame.height - 2)
+        scrollView.backgroundColor = .Red
+        scrollView.contentSize = Size(width: scrollView.frame.width, height: scrollView.frame.height + 10)
+        scrollView.contentOffset = Point(x: 0, y: 0)
+        
+        for i in 0..<scrollView.contentSize.height {
+            let innerView = View()
+            innerView.frame = Frame(x: 1, y: i, width: scrollView.frame.width - 2, height: 1)
+            innerView.backgroundColor = Color(rawValue: 8 + (i % 8))!
+            
+            scrollView.addSubview(innerView)
+        }
+        
+        view.addSubview(scrollView)
     }
     
     override func handleEvent(event: Termbox.Event) {

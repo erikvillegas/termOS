@@ -11,24 +11,32 @@ import Foundation
 
 // Helper methods
 
-// recursively find the first responder text field in the given view
-func findFirstResponder(view: View) -> TextField? {
-    if view.subviews.count == 0 {
-        if let textField = view as? TextField where textField.isFirstResponder {
-            return textField
-        }
-        else {
-            return nil
-        }
+// recursively find the first responder view in the given view
+func findFirstResponder(view: View) -> View? {
+    if view.subviews.count == 0 && view.isFirstResponder {
+        return view
     }
     
     for subview in view.subviews {
-        if let activeTextField = findFirstResponder(subview) {
-            return activeTextField
+        if let firstResponderView = findFirstResponder(subview) {
+            return firstResponderView
         }
     }
     
     return nil
+}
+
+
+func sendEvent(event: Termbox.Event, view: View) {
+    if view.subviews.count == 0 {
+        view.handleEvent(event)
+    }
+    else {
+        for subview in view.subviews {
+            subview.handleEvent(event)
+            sendEvent(event, view: subview)
+        }
+    }
 }
 
 func renderView(view:View, termbox:Termbox) {
@@ -36,19 +44,13 @@ func renderView(view:View, termbox:Termbox) {
     
     for (row, rowCells) in cells.enumerate() {
         for (column, cell) in rowCells.enumerate() {
-            log("(3) adding at (\(column), \(row))")
-            termbox.addCell(cell, at: Point(x: row, y: column))
+            termbox.addCell(cell, at: Point(x: column, y: row))
         }
     }
 }
 
 func start() {
 
-    #if DEBUG
-    print("started in debug")
-    #else
-    print("started in release")
-    #endif
     
     let termbox = Termbox.sharedInstance
     
@@ -57,9 +59,11 @@ func start() {
     // set up views and controllers
     let window = View()
     window.frame = Frame(x: 0, y: 0, width: termbox.width, height: termbox.height)
+    window.bounds = window.frame
     
     let navigationController = NavigationController()
     navigationController.view.frame = window.frame
+    navigationController.view.bounds = window.frame
     window.addSubview(navigationController.view)
     navigationController.viewDidLoad()
     
@@ -81,6 +85,7 @@ func start() {
         }
         else if case .WindowResize(let width, let height) = event {
             window.frame = Frame(x: 0, y: 0, width: width, height: height)
+            window.bounds = window.frame
         }
         
         // send event to first responder
@@ -89,6 +94,8 @@ func start() {
         }
         
         navigationController.handleEvent(event)
+        
+        sendEvent(event, view: window)
         
         renderView(window, termbox: termbox)
         termbox.displayCells()

@@ -8,7 +8,23 @@
 
 import Foundation
 
-class View {
+class Responder {
+    var isFirstResponder = false
+    
+    func becomeFirstResponder() {
+        
+    }
+    
+    func resignFirstResponder() {
+        
+    }
+    
+    func handleEvent(event: Termbox.Event) {
+        
+    }
+}
+
+class View : Responder {
     var frame = Frame(x: 0, y: 0, width: 0, height: 0)
     var bounds = Frame(x: 0, y: 0, width: 0, height: 0)
     var backgroundColor = Color.Clear
@@ -17,46 +33,39 @@ class View {
     
     func draw() -> [[Cell]] {
         
-
-        
-//        for subview in subviews {
-//            subview.draw()
-//        }
-        
-
-        return self.rasterize()
-    }
-    
-    func rasterize() -> [[Cell]] {
-        
         // 1. rasterize myself
-        var cells = Array(count: frame.width, repeatedValue: Array(count: frame.height, repeatedValue: Cell.emptyCell()))
+        var cells = Array(count: frame.height, repeatedValue: Array(count: frame.width, repeatedValue: Cell.emptyCell()))
         
         for y in 0..<frame.height {
             for x in 0..<frame.width {
-                log("adding at (\(x), \(y))")
-                
-                cells[x][y].character = " "
-                cells[x][y].backgroundColor = backgroundColor
+                cells[y][x].character = " "
+                cells[y][x].backgroundColor = backgroundColor
             }
         }
         
         // 2. composite my rasterized subviews on top of me
-        if let firstSubview = subviews.first {
+        for subview in subviews {
             
-            let subviewCells = firstSubview.rasterize()
+            let subviewCells = subview.draw()
             
             // composite the cells on top of mine given the frame.
             
-            for y in 0..<firstSubview.frame.height {
-                for x in 0..<firstSubview.frame.width {
+            for y in 0..<subview.frame.height {
+                for x in 0..<subview.frame.width {
                     
-                    let positionX = x + firstSubview.frame.x
-                    let positionY = y + firstSubview.frame.y
+                    // calculate the position the cell should be placed at
+                    let positionX = x + subview.frame.x - bounds.x
+                    let positionY = y + subview.frame.y - bounds.y
                     
-                    log("(2) adding at (\(positionX), \(positionY))")
-                    
-                    cells[positionX][positionY] = subviewCells[x][y]
+                    // only display the cell if it's within our bounds. Otherwise it'll be clipped
+                    if positionY >= 0 && positionY < cells.count && positionX >= 0 && positionX < cells[positionY].count {
+//                        if self is ScrollView {
+//                            log("setting cell at position (\(positionX), \(positionY))")
+//                        }
+                        
+                        cells[positionY][positionX] = subviewCells[y][x]
+                        
+                    }
                 }
             }
             

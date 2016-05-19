@@ -23,6 +23,7 @@ class NavigationController : BaseController {
     func pushViewController(controller: BaseController) {
         viewControllers.append(controller)
         controller.view.frame = view.frame
+        controller.view.bounds = view.frame
         view.addSubview(controller.view)
         controller.viewDidLoad()
     }

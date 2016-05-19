@@ -8,12 +8,6 @@
 
 import Foundation
 
-protocol Respondable {
-    func becomeFirstResponder()
-    func resignFirstResponder()
-    func handleEvent(event: Termbox.Event)
-}
-
 class TextField : View {
     
     enum Event {
@@ -24,7 +18,6 @@ class TextField : View {
     var text: String
     var textColor = Color.White
     var eventHandler: ((Event) -> (Void))?
-    var isFirstResponder = false
     
     init(text: String) {
         self.text = text
@@ -85,18 +78,16 @@ class TextField : View {
         
         return [[Cell]]()
     }
-}
-
-extension TextField : Respondable {
-    func becomeFirstResponder() {
+    
+    override func becomeFirstResponder() {
         isFirstResponder = true
     }
     
-    func resignFirstResponder() {
+    override func resignFirstResponder() {
         isFirstResponder = false
     }
     
-    func handleEvent(event: Termbox.Event) {
+    override func handleEvent(event: Termbox.Event) {
         if case .CharacterPressed(let character) = event {
             if text.characters.count < frame.width {
                 text += character

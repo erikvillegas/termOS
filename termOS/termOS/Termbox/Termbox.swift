@@ -58,6 +58,15 @@ struct Point : CustomStringConvertible {
     }
 }
 
+struct Size : CustomStringConvertible {
+    var width: Int
+    var height: Int
+    
+    var description: String {
+        return "(\(width), \(height))"
+    }
+}
+
 struct Cell {
     var character: String
     var textColor: Color
