@@ -133,6 +133,10 @@ class Termbox {
         var event:tb_event = tb_event()
         tb_poll_event(&event)
         
+        #if DEBUG
+            return .CharacterPressed(character: " ")
+        #endif
+        
         if Int32(event.type) == TB_EVENT_KEY {
             if event.ch != 0 {
                 return .CharacterPressed(character: String(UnicodeScalar(event.ch)))

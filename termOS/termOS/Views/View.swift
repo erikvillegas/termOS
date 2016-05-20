@@ -45,10 +45,7 @@ class View : Responder {
         
         // 2. composite my rasterized subviews on top of me
         for subview in subviews {
-            
             let subviewCells = subview.draw()
-            
-            // composite the cells on top of mine given the frame.
             
             for y in 0..<subview.frame.height {
                 for x in 0..<subview.frame.width {
@@ -59,17 +56,11 @@ class View : Responder {
                     
                     // only display the cell if it's within our bounds. Otherwise it'll be clipped
                     if positionY >= 0 && positionY < cells.count && positionX >= 0 && positionX < cells[positionY].count {
-//                        if self is ScrollView {
-//                            log("setting cell at position (\(positionX), \(positionY))")
-//                        }
-                        
                         cells[positionY][positionX] = subviewCells[y][x]
-                        
                     }
                 }
             }
-            
-            
+
         }
         
         // 3. return my rasterized/composited cells
@@ -80,10 +71,26 @@ class View : Responder {
         subviews.append(view)
         view.superview = self
     }
+    
+    func removeFromSuperview() {
+        if let superview = superview {
+            if let subviewIndex = superview.subviews.indexOf(self) {
+                superview.subviews.removeAtIndex(subviewIndex)
+                self.superview = nil
+                return
+            }
+        }
+    }
 }
 
 extension View : CustomStringConvertible {
     var description: String {
         return "(\(frame.x), \(frame.y), \(frame.width), \(frame.height))"
     }
+}
+
+extension View : Equatable {}
+
+func ==(lhs: View, rhs: View) -> Bool {
+    return lhs === rhs
 }

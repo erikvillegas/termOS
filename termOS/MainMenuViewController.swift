@@ -135,21 +135,28 @@ class MainMenuViewController : MenuViewController {
 //        }
 
 
-        let scrollView = ScrollView()
-        scrollView.frame = Frame(x: 1, y: 1, width: view.frame.width - 2, height: view.frame.height - 2)
-        scrollView.backgroundColor = .Red
-        scrollView.contentSize = Size(width: scrollView.frame.width, height: scrollView.frame.height + 10)
-        scrollView.contentOffset = Point(x: 0, y: 0)
+        let tableView = TableView()
+        tableView.frame = Frame(x: 0, y: 0, width: view.frame.width - 0, height: view.frame.height - 0)
+        tableView.backgroundColor = .RedDimmed
+        tableView.dataSource = self
+        tableView.reloadData()
         
-        for i in 0..<scrollView.contentSize.height {
-            let innerView = View()
-            innerView.frame = Frame(x: 1, y: i, width: scrollView.frame.width - 2, height: 1)
-            innerView.backgroundColor = Color(rawValue: 8 + (i % 8))!
-            
-            scrollView.addSubview(innerView)
-        }
+//        for i in 0..<tableView.contentSize.height {
+//            let innerView = View()
+//            innerView.frame = Frame(x: 1, y: i, width: tableView.frame.width - 2, height: 1)
+//            innerView.backgroundColor = Color(rawValue: 8 + (i % 8))!
+//            
+//            tableView.addSubview(innerView)
+//        }
+//        
+        view.addSubview(tableView)
         
-        view.addSubview(scrollView)
+//        let label = Label(text: "Hello!")
+//        label.frame = Frame(x: 0, y: 0, width: view.frame.width - 0, height: view.frame.height - 0)
+//        label.backgroundColor = .White
+//        label.textColor = .Red
+//        
+//        view.addSubview(label)
     }
     
     override func handleEvent(event: Termbox.Event) {
@@ -169,5 +176,32 @@ class MainMenuViewController : MenuViewController {
             
             nextResponder.becomeFirstResponder()
         }
+    }
+}
+
+extension MainMenuViewController : TableViewDataSource {
+    func numberOfRows(tableView: TableView) -> Int {
+        return 20
+    }
+    
+    func heightForRows(tableView: TableView) -> Int {
+        return 1
+    }
+    
+    func cellForRow(row: Int, tableView: TableView) -> TableViewCell {
+        let cell = TableViewCell()
+        cell.backgroundColor = Color(rawValue: 8 + (row % 8))!
+        
+        let label = Label(text: "Hello there! You are looking at row \(row)")
+        label.frame = Frame(x: 0, y: 0, width: tableView.frame.width, height: heightForRows(tableView))
+        label.backgroundColor = .Clear
+        
+        cell.addSubview(label)
+        
+        return cell
+    }
+    
+    func rowSeparatorHeight(tableView: TableView) -> Int {
+        return 0
     }
 }
