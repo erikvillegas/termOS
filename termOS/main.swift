@@ -40,9 +40,10 @@ func sendEvent(event: Termbox.Event, view: View) {
 }
 
 func renderView(view:View, termbox:Termbox) {
-    let cells = view.draw()
+    view.draw()
+    view.composite()
     
-    for (row, rowCells) in cells.enumerate() {
+    for (row, rowCells) in view.contents!.enumerate() {
         for (column, cell) in rowCells.enumerate() {
             termbox.addCell(cell, at: Point(x: column, y: row))
         }
@@ -60,6 +61,14 @@ func start() {
     let window = View()
     window.frame = Frame(x: 0, y: 0, width: termbox.width, height: termbox.height)
     window.bounds = window.frame
+    window.backgroundColor = .Red
+    
+//    let view = Label(text: "Hey!")
+//    view.frame = Frame(x: 2, y: 2, width: window.frame.width - 4, height: window.frame.height - 4)
+//    view.backgroundColor = .RedDimmed
+//    view.textAlignment = .Center
+//    
+//    window.addSubview(view)
     
     let navigationController = NavigationController()
     navigationController.view.frame = window.frame

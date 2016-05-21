@@ -11,7 +11,7 @@ import Foundation
 class MainMenuViewController : MenuViewController {
     
     var headerLabel: Label!
-    var textFields = [TextField]()
+//    var textFields = [TextField]()
     
     func updateHeaderLabelWithFirstName(firstName: String?, lastName: String?) {
         var string = "Hello"
@@ -40,10 +40,10 @@ class MainMenuViewController : MenuViewController {
 //        headerLabel.backgroundColor = .CyanDimmed
 //        headerLabel.textAlignment = .Center
 //        
-//        updateHeaderLabelWithFirstName(nil, lastName: nil)
+//        updateHeaderLabelWithFirstName("Erik", lastName: "V")
 //        
 //        view.addSubview(headerLabel)
-//        
+//
 //        
 //        let contentView = View()
 //        contentView.frame = Frame(x: 0, y: 2, width: view.frame.width, height: 10)
@@ -136,10 +136,12 @@ class MainMenuViewController : MenuViewController {
 
 
         let tableView = TableView()
-        tableView.frame = Frame(x: 0, y: 0, width: view.frame.width - 0, height: view.frame.height - 0)
+        tableView.frame = Frame(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         tableView.backgroundColor = .RedDimmed
         tableView.dataSource = self
         tableView.reloadData()
+        
+        view.addSubview(tableView)
         
 //        for i in 0..<tableView.contentSize.height {
 //            let innerView = View()
@@ -148,8 +150,8 @@ class MainMenuViewController : MenuViewController {
 //            
 //            tableView.addSubview(innerView)
 //        }
-//        
-        view.addSubview(tableView)
+
+        
         
 //        let label = Label(text: "Hello!")
 //        label.frame = Frame(x: 0, y: 0, width: view.frame.width - 0, height: view.frame.height - 0)
@@ -163,25 +165,25 @@ class MainMenuViewController : MenuViewController {
         if case .KeyPressed(let key) = event where key == .Tab {
             var firstResponderIndex = 0
             
-            for (index, textField) in textFields.enumerate() {
-                if textField.isFirstResponder {
-                    textField.resignFirstResponder()
-                    firstResponderIndex = index
-                    break
-                }
-            }
-            
-            //            log("\(firstResponderIndex)")
-            let nextResponder = textFields[(firstResponderIndex + 1) % textFields.count]
-            
-            nextResponder.becomeFirstResponder()
+//            for (index, textField) in textFields.enumerate() {
+//                if textField.isFirstResponder {
+//                    textField.resignFirstResponder()
+//                    firstResponderIndex = index
+//                    break
+//                }
+//            }
+//            
+//            //            log("\(firstResponderIndex)")
+//            let nextResponder = textFields[(firstResponderIndex + 1) % textFields.count]
+//            
+//            nextResponder.becomeFirstResponder()
         }
     }
 }
 
 extension MainMenuViewController : TableViewDataSource {
     func numberOfRows(tableView: TableView) -> Int {
-        return 20
+        return 50
     }
     
     func heightForRows(tableView: TableView) -> Int {

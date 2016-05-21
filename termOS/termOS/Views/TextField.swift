@@ -23,7 +23,9 @@ class TextField : View {
         self.text = text
     }
     
-    override func draw() -> [[Cell]] {
+    override func draw() {
+        super.draw()
+        
         var startX = frame.x
         var startY = frame.y
         
@@ -72,11 +74,7 @@ class TextField : View {
             Termbox.sharedInstance.cursor.position = newCursorPosition
         }
         
-        for subview in subviews {
-            subview.draw()
-        }
-        
-        return [[Cell]]()
+        self.contents = cells
     }
     
     override func becomeFirstResponder() {

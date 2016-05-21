@@ -30,22 +30,34 @@ class View : Responder {
     var backgroundColor = Color.Clear
     var subviews = [View]()
     var superview: View?
+    var contents:[[Cell]]?
     
-    func draw() -> [[Cell]] {
-        
-        // 1. rasterize myself
+    func draw() {
         var cells = Array(count: frame.height, repeatedValue: Array(count: frame.width, repeatedValue: Cell.emptyCell()))
         
+        // draw myself
         for y in 0..<frame.height {
             for x in 0..<frame.width {
                 cells[y][x].character = " "
                 cells[y][x].backgroundColor = backgroundColor
             }
         }
+
+        contents = cells
         
-        // 2. composite my rasterized subviews on top of me
+        // make subviews draw themselves
         for subview in subviews {
-            let subviewCells = subview.draw()
+            subview.draw()
+        }
+    }
+    
+    func composite() {
+        for subview in subviews {
+            
+            subview.composite()
+            
+            var cells = self.contents ?? [[Cell]]()
+            var subviewCells = subview.contents ?? [[Cell]]()
             
             for y in 0..<subview.frame.height {
                 for x in 0..<subview.frame.width {
@@ -60,11 +72,9 @@ class View : Responder {
                     }
                 }
             }
-
+            
+            self.contents = cells
         }
-        
-        // 3. return my rasterized/composited cells
-        return cells
     }
     
     func addSubview(view: View) {
