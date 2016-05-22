@@ -25,6 +25,8 @@ enum TextAttribute : Int {
     case Bold = 256
     case Underlined = 512
     case BoldAndUnderlined = 768
+    case Reversed = 1024
+    case Focused = 1792
 }
 
 // https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
@@ -74,13 +76,13 @@ struct Cell {
     var textAttribute: TextAttribute
     
     static func emptyCell() -> Cell {
-        return Cell(character: " ", textColor: .Black, backgroundColor: .Black, textAttribute: .Bold)
+        return Cell(character: " ", textColor: .Black, backgroundColor: .Black, textAttribute: .None)
     }
 }
 
 class Termbox {
     enum Event {
-        case WindowResize(width : Int, height : Int)
+        case WindowResized(width : Int, height : Int)
         case MouseClick(x : Int, y : Int)
         case CharacterPressed(character: String)
         case KeyPressed(key: Key)
@@ -156,7 +158,7 @@ class Termbox {
             return .MouseClick(x: Int(event.x), y: Int(event.y))
         }
         else if Int32(event.type) == TB_EVENT_RESIZE {
-            return .WindowResize(width: Int(event.w), height: Int(event.h))
+            return .WindowResized(width: Int(event.w), height: Int(event.h))
         }
         return .Unknown
     }

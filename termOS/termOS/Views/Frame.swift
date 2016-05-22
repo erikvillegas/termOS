@@ -14,3 +14,9 @@ struct Frame {
     let width: Int
     let height: Int
 }
+
+extension Frame : CustomStringConvertible {
+    var description: String {
+        return "(x: \(x), y: \(y), width: \(width), height: \(height))"
+    }
+}

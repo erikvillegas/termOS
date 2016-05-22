@@ -19,6 +19,7 @@ class Label : View {
     var text: String
     var textColor = Color.White
     var textAlignment = Alignment.Left
+    var textAttribute = TextAttribute.None
     
     init(text: String) {
         self.text = text
@@ -48,10 +49,12 @@ class Label : View {
             for x in 0..<frame.width {
                 
                 var characterToDisplay = " "
+                var drawingLabelCharacter = false
                 
                 if y == textRow && x >= textStartColumn && drawLetterIndex < text.characters.count {
                     characterToDisplay = String(text[text.startIndex.advancedBy(drawLetterIndex)])
                     drawLetterIndex += 1
+                    drawingLabelCharacter = true
                 }
                 
                 cells[y][x].character = characterToDisplay
@@ -62,6 +65,13 @@ class Label : View {
                 }
                 else {
                     cells[y][x].backgroundColor = superview?.backgroundColor ?? .Black
+                }
+                
+                if drawingLabelCharacter {
+                    cells[y][x].textAttribute = textAttribute
+                }
+                else if textAttribute.rawValue & TextAttribute.Reversed.rawValue == TextAttribute.Reversed.rawValue {
+                    cells[y][x].textAttribute = .Reversed
                 }
             }
         }

@@ -87,7 +87,6 @@ class View : Responder {
             if let subviewIndex = superview.subviews.indexOf(self) {
                 superview.subviews.removeAtIndex(subviewIndex)
                 self.superview = nil
-                return
             }
         }
     }

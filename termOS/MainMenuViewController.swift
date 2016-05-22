@@ -135,14 +135,14 @@ class MainMenuViewController : MenuViewController {
 //        }
 
 
-        let tableView = TableView()
-        tableView.frame = Frame(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        tableView.backgroundColor = .CyanDimmed
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.reloadData()
-        
-        view.addSubview(tableView)
+//        let tableView = TableView()
+//        tableView.frame = Frame(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+//        tableView.backgroundColor = .CyanDimmed
+//        tableView.dataSource = self
+//        tableView.delegate = self
+//        tableView.reloadData()
+//        
+//        view.addSubview(tableView)
         
 //        for i in 0..<tableView.contentSize.height {
 //            let innerView = View()
@@ -160,12 +160,67 @@ class MainMenuViewController : MenuViewController {
 //        label.textColor = .Red
 //        
 //        view.addSubview(label)
+        
+        let b1 = Button(text: "Button 1")
+        b1.frame = Frame(x: 5, y: 2, width: b1.text.characters.count + 4, height: 3)
+        b1.backgroundColor = .BlueDimmed
+        b1.textColor = .White
+        b1.textAlignment = .Center
+//        b1.unfocusedTextAttribute = .
+
+        view.addSubview(b1)
+        
+        let b2 = Button(text: "Button 2")
+        b2.frame = Frame(x: b1.frame.x + b1.frame.width + 5, y: 2, width: b2.text.characters.count + 4, height: 3)
+        b2.backgroundColor = .MagentaDimmed
+        b2.textColor = .White
+        b2.textAlignment = .Center
+        
+        view.addSubview(b2)
+        
+        let b3 = Button(text: "Button 3")
+        b3.frame = Frame(x: b2.frame.x + b2.frame.width + 5, y: 2, width: b3.text.characters.count + 4, height: 3)
+        b3.backgroundColor = .RedDimmed
+        b3.textColor = .White
+        b3.textAlignment = .Center
+        
+        view.addSubview(b3)
+        
+        let b4View = View()
+        b4View.frame = Frame(x: b3.frame.x + b3.frame.width + 4, y: 1, width: b3.text.characters.count + 6, height: 5)
+        b4View.backgroundColor = .Cyan
+        
+        view.addSubview(b4View)
+        
+        let b4 = Button(text: "Button 4")
+        b4.frame = Frame(x: 1, y: 1, width: b4.text.characters.count + 4, height: 3)
+        b4.backgroundColor = .CyanDimmed
+        b4.textColor = .White
+        b4.textAlignment = .Center
+        
+        b4View.addSubview(b4)
+        
+        let b5 = Button(text: "Button 5")
+        b5.frame = Frame(x: b1.frame.x, y: b1.frame.y + b1.frame.height + 2, width: b5.text.characters.count + 4, height: 3)
+        b5.backgroundColor = .YellowDimmed
+        b5.textColor = .White
+        b5.textAlignment = .Center
+        
+        view.addSubview(b5)
+        
+        let b6 = Button(text: "Button 6")
+        b6.frame = Frame(x: b5.frame.x + b3.frame.width + 5, y: b5.frame.y, width: b6.text.characters.count + 4, height: 3)
+        b6.backgroundColor = .GreenDimmed
+        b6.textColor = .White
+        b6.textAlignment = .Center
+        
+        view.addSubview(b6)
     }
     
     override func handleEvent(event: Termbox.Event) {
-        if case .KeyPressed(let key) = event where key == .Tab {
-            var firstResponderIndex = 0
-            
+//        if case .KeyPressed(let key) = event where key == .Tab {
+//            var firstResponderIndex = 0
+//            
 //            for (index, textField) in textFields.enumerate() {
 //                if textField.isFirstResponder {
 //                    textField.resignFirstResponder()
@@ -178,7 +233,7 @@ class MainMenuViewController : MenuViewController {
 //            let nextResponder = textFields[(firstResponderIndex + 1) % textFields.count]
 //            
 //            nextResponder.becomeFirstResponder()
-        }
+//        }
     }
 }
 
