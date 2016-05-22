@@ -19,8 +19,15 @@ protocol TableViewDataSource {
     func cellForRow(row:Int, tableView:TableView) -> TableViewCell
 }
 
+protocol TableViewDelegate {
+    func tableView(tableView:TableView, didSelectRow row:Int)
+}
+
+
 class TableView : ScrollView {
+    var delegate: TableViewDelegate?
     var dataSource: TableViewDataSource?
+    var highlightedIndex = 0
     
     func reloadData() {
         
@@ -48,6 +55,44 @@ class TableView : ScrollView {
             else {
                 contentSize = Size(width: frame.width, height: numberOfRows * rowHeight)
             }
+        }
+    }
+    
+    override func handleEvent(event: Termbox.Event) {
+        if case .KeyPressed(let key) = event {
+            
+            if let dataSource = dataSource {
+                let numberOfRows = dataSource.numberOfRows(self)
+                let rowHeight = dataSource.heightForRows(self) + dataSource.rowSeparatorHeight(self)
+                
+                if key == .DownArrow {
+                    highlightedIndex = min(highlightedIndex + 1, numberOfRows)
+                    
+                    if ((highlightedIndex * rowHeight) - contentOffset.y) >= frame.height {
+                        contentOffset.y = min(contentOffset.y + rowHeight, contentSize.height - frame.height)
+                    }
+                }
+                else if key == .UpArrow {
+                    highlightedIndex = max(highlightedIndex - 1, -1)
+                    
+                    if (highlightedIndex * rowHeight) < contentOffset.y {
+                        contentOffset.y = max(contentOffset.y - rowHeight, 0)
+                    }
+                }
+                else if key == .LeftArrow {
+                    
+                }
+                else if key == .RightArrow {
+                    
+                }
+                else if key == .Enter {
+                    if highlightedIndex >= 0 && highlightedIndex < numberOfRows {
+                        delegate?.tableView(self, didSelectRow: highlightedIndex)
+                    }
+                }
+            }
+            
+            reloadData()
         }
     }
 }

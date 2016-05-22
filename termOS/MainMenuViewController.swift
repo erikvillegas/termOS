@@ -137,8 +137,9 @@ class MainMenuViewController : MenuViewController {
 
         let tableView = TableView()
         tableView.frame = Frame(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        tableView.backgroundColor = .RedDimmed
+        tableView.backgroundColor = .CyanDimmed
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.reloadData()
         
         view.addSubview(tableView)
@@ -187,16 +188,19 @@ extension MainMenuViewController : TableViewDataSource {
     }
     
     func heightForRows(tableView: TableView) -> Int {
-        return 1
+        return 3
     }
     
     func cellForRow(row: Int, tableView: TableView) -> TableViewCell {
+        let isHighlighted = (tableView.highlightedIndex == row)
+        
         let cell = TableViewCell()
-        cell.backgroundColor = Color(rawValue: 8 + (row % 8))!
+        cell.backgroundColor = isHighlighted ? .Gray : .BlueDimmed
         
         let label = Label(text: "Hello there! You are looking at row \(row)")
         label.frame = Frame(x: 0, y: 0, width: tableView.frame.width, height: heightForRows(tableView))
         label.backgroundColor = .Clear
+        label.textColor = isHighlighted ? .BlueDimmed : .White
         
         cell.addSubview(label)
         
@@ -204,6 +208,12 @@ extension MainMenuViewController : TableViewDataSource {
     }
     
     func rowSeparatorHeight(tableView: TableView) -> Int {
-        return 0
+        return 1
+    }
+}
+
+extension MainMenuViewController : TableViewDelegate {
+    func tableView(tableView: TableView, didSelectRow row: Int) {
+        log("selected row \(row)")
     }
 }

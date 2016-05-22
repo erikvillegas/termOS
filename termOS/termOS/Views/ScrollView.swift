@@ -30,8 +30,6 @@ class ScrollView : View {
             else if key == .RightArrow {
                 
             }
-            
-            log("content offset: " + String(contentOffset))
         }
     }
 }
