@@ -52,6 +52,7 @@ func renderView(view:View, termbox:Termbox) {
 
 let window = View()
 var focusedElement: Focusable?
+var focusedArea: FocusableArea?
 
 func start() {
     
@@ -62,7 +63,7 @@ func start() {
     // set up views and controllers
     window.frame = Frame(x: 0, y: 0, width: termbox.width, height: termbox.height)
     window.bounds = window.frame
-    window.backgroundColor = .Red
+    window.backgroundColor = .White
     
 //    let view = Label(text: "Hey!")
 //    view.frame = Frame(x: 2, y: 2, width: window.frame.width - 4, height: window.frame.height - 4)
@@ -85,17 +86,17 @@ func start() {
     renderView(window, termbox: termbox)
     termbox.displayCells()
     
-    var looping = true
+    let looping = true
     
     while looping {
         let event = termbox.waitForEvent()
         
         termbox.clearAllCells()
         
-        if case .KeyPressed(let key) = event where key == .Escape {
-            looping = false
-        }
-        else if case .WindowResized(let width, let height) = event {
+//        if case .KeyPressed(let key) = event where key == .Escape {
+//            looping = false
+//        }
+        if case .WindowResized(let width, let height) = event {
             window.frame = Frame(x: 0, y: 0, width: width, height: height)
             window.bounds = window.frame
         }
@@ -121,14 +122,19 @@ func start() {
     termbox.stop()
 }
 
-enum Direction {
-    case Up
-    case Down
-    case Left
-    case Right
-}
-
 func updateFocus(key: Termbox.Event.Key, inWindow window: View) {
+    // if we're in a current focus area, let the area handle the key itself
+    if focusedArea != nil {
+        focusedArea?.updateInnerFocusWithKey(key)
+        
+        if key == .Escape {
+            focusedArea?.loseInnerFocus()
+            focusedArea = nil
+        }
+        
+        return
+    }
+    
     if let element = focusedElement {
         let elementRelativeFrame = frameRelativeToWindow(element)
         
@@ -153,40 +159,118 @@ func updateFocus(key: Termbox.Event.Key, inWindow window: View) {
             checkFocusFrame = Frame(x: elementRelativeFrame.x, y: 0, width: elementRelativeFrame.width, height: elementRelativeFrame.y)
             direction = .Up
         }
+        else if key == .Enter {
+            if let focusableArea = focusedElement as? FocusableArea {
+                focusedArea = focusableArea
+                
+                focusedArea?.gainInnerFocus()
+                focusedArea?.updateInnerFocusWithKey(key)
+                
+//                let focusableAreaView = focusableArea as! View
+//
+//                log("checking inside focus area")
+//                if let focusableElement = closestFocusableInFrame(focusableArea.frame, inView: focusableAreaView, direction: .Down, focusView: focusableAreaView) {
+//                    log("found focus element!")
+//                    focusedElement = focusableElement
+//                    focusedElement?.gainFocus()
+//                }
+            }
+            
+            return
+        }
         
-        if let checkFocusFrame = checkFocusFrame, direction = direction, focusableElement = firstFocusableInFrame(checkFocusFrame, inView: window, direction: direction) {
+        if let checkFocusFrame = checkFocusFrame, direction = direction, focusableElement = closestFocusableInFrame(checkFocusFrame, inView: window, direction: direction, focusView: nil) {
             element.loseFocus()
             focusedElement = focusableElement
             focusedElement?.gainFocus()
+            
         }
     }
     else {
-        if let element = setInitialFocusInWindow(window) {
-            focusedElement = element
+        if let focusableElement = setInitialFocusInWindow(window) {
+            focusedElement = focusableElement
             focusedElement?.gainFocus()
+
         }
     }
 }
 
-func firstFocusableInFrame(focusFrame: Frame, inView view: View, direction: Direction) -> Focusable? {
-//    log("firstFocusableInFrame: " + focusFrame.description)
-    if view.subviews.count == 0 && view is Focusable {
-        let viewRelativeFrame = frameRelativeToWindow(view as! Focusable)
-        
-        if viewRelativeFrame.x >= focusFrame.x && viewRelativeFrame.x <= (focusFrame.x + focusFrame.width) &&
-            viewRelativeFrame.y >= focusFrame.y && viewRelativeFrame.y <= (focusFrame.y + focusFrame.height) &&
-            (viewRelativeFrame.x + viewRelativeFrame.width) >= focusFrame.x && (viewRelativeFrame.x + viewRelativeFrame.width) <= (focusFrame.x + focusFrame.width) &&
-            (viewRelativeFrame.y + viewRelativeFrame.height) >= focusFrame.y && (viewRelativeFrame.y + viewRelativeFrame.height) <= (focusFrame.y + focusFrame.height) {
+//func updateFocus(key: Termbox.Event.Key, inWindow window: View, inFocusArea: FocusableArea) {
+//    let elementRelativeFrame = frameRelativeToWindow(element)
+//    
+//    var checkFocusFrame: Frame?
+//    var direction: Direction?
+//    
+//    if key == .RightArrow {
+//        let checkFocusX = elementRelativeFrame.x + elementRelativeFrame.width
+//        checkFocusFrame = Frame(x: checkFocusX, y: elementRelativeFrame.y, width: window.frame.width - checkFocusX, height: elementRelativeFrame.height)
+//        direction = .Right
+//    }
+//    else if key == .LeftArrow {
+//        checkFocusFrame = Frame(x: 0, y: elementRelativeFrame.y, width: elementRelativeFrame.x, height: elementRelativeFrame.height)
+//        direction = .Left
+//    }
+//    else if key == .DownArrow {
+//        let checkFocusY = elementRelativeFrame.y + elementRelativeFrame.height
+//        checkFocusFrame = Frame(x: elementRelativeFrame.x, y: checkFocusY, width: elementRelativeFrame.width, height: window.frame.height - checkFocusY)
+//        direction = .Down
+//    }
+//    else if key == .UpArrow {
+//        checkFocusFrame = Frame(x: elementRelativeFrame.x, y: 0, width: elementRelativeFrame.width, height: elementRelativeFrame.y)
+//        direction = .Up
+//    }
+//    else if key == .Enter {
+//        if let focusableArea = focusedElement as? FocusableArea {
+//            focusedArea = focusableArea
+//            
+//            let focusableAreaView = focusableArea as! View
+//            
+//            log("checking inside focus area")
+//            if let focusableElement = closestFocusableInFrame(focusableArea.frame, inView: focusableAreaView, direction: .Down, focusView: focusableAreaView) {
+//                log("found focus element!")
+//                focusedElement = focusableElement
+//                focusedElement?.gainFocus()
+//                
+//                focusableArea.didUpdateFocusInArea(.Down)
+//            }
+//        }
+//        
+//        return
+//    }
+//}
+
+func frame(innerFrame: Frame, isContainedInFrame outerFrame: Frame) -> Bool {
+    return innerFrame.x >= outerFrame.x && innerFrame.x <= (outerFrame.x + outerFrame.width) &&
+        innerFrame.y >= outerFrame.y && innerFrame.y <= (outerFrame.y + outerFrame.height) &&
+        (innerFrame.x + innerFrame.width) >= outerFrame.x && (innerFrame.x + innerFrame.width) <= (outerFrame.x + outerFrame.width) &&
+        (innerFrame.y + innerFrame.height) >= outerFrame.y && (innerFrame.y + innerFrame.height) <= (outerFrame.y + outerFrame.height)
+}
+
+func closestFocusableInFrame(focusFrame: Frame, inView view: View, direction: Direction, focusView: View?) -> Focusable? {
+    log("checking view: " + view.description)
+    if view is Focusable {
+        // if we passed in focusView, continue on if they are the same object
+        // focusView == view comprising focusFrame
+        if focusView == nil || focusView != view {
+            let viewRelativeFrame = frameRelativeToWindow(view as! Focusable)
             
-            return view as? Focusable
+            
+            
+            if frame(viewRelativeFrame, isContainedInFrame: focusFrame) {
+                return view as? Focusable
+            }
         }
     }
     
     var focusableElements = [Focusable]()
     
     for subview in view.subviews {
-        if let focusableElement = firstFocusableInFrame(focusFrame, inView: subview, direction: direction) {
-            focusableElements.append(focusableElement)
+        log("checking if \(subview.frame) is inside \(view.bounds)")
+        if frame(subview.frame, isContainedInFrame: view.bounds) {
+            
+            if let focusableElement = closestFocusableInFrame(focusFrame, inView: subview, direction: direction, focusView: focusView) {
+                focusableElements.append(focusableElement)
+            }
         }
     }
     
@@ -224,7 +308,7 @@ func setInitialFocusInWindow(window: View) -> Focusable? {
 }
 
 func findFirstFocusableElementInView(view: View) -> Focusable? {
-    if view.subviews.count == 0 && view is Focusable {
+    if view is Focusable {
         return view as? Focusable
     }
     

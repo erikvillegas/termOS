@@ -21,6 +21,7 @@
 		15681F411CEA15F500CF79F4 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F3A1CEA15F500CF79F4 /* View.swift */; };
 		15681F451CEA15FD00CF79F4 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F421CEA15FD00CF79F4 /* Logger.swift */; };
 		15681F461CEA15FD00CF79F4 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15681F431CEA15FD00CF79F4 /* MainMenuViewController.swift */; };
+		15EF7D6B1CF279D90010FC38 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EF7D6A1CF279D90010FC38 /* Direction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +58,7 @@
 		15681F421CEA15FD00CF79F4 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		15681F431CEA15FD00CF79F4 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		15681F441CEA15FD00CF79F4 /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		15EF7D6A1CF279D90010FC38 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		15681F301CEA15F500CF79F4 /* termOS */ = {
 			isa = PBXGroup;
 			children = (
+				15EF7D691CF279BE0010FC38 /* Models */,
 				15681F421CEA15FD00CF79F4 /* Logger.swift */,
 				15681F311CEA15F500CF79F4 /* Controllers */,
 				15681F341CEA15F500CF79F4 /* Termbox */,
@@ -159,6 +162,14 @@
 				15681F271CEA15EB00CF79F4 /* termbox-lib */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		15EF7D691CF279BE0010FC38 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				15EF7D6A1CF279D90010FC38 /* Direction.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +237,7 @@
 				15238E941CF0B67000EE862A /* Label.swift in Sources */,
 				15681F411CEA15F500CF79F4 /* View.swift in Sources */,
 				15238E971CF1486500EE862A /* Button.swift in Sources */,
+				15EF7D6B1CF279D90010FC38 /* Direction.swift in Sources */,
 				15681F3C1CEA15F500CF79F4 /* NavigationController.swift in Sources */,
 				15681F211CEA15B800CF79F4 /* main.swift in Sources */,
 				15238E911CEB752A00EE862A /* ScrollView.swift in Sources */,
